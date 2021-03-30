@@ -17,6 +17,9 @@ if(!userToken) {
 } else {
 	navItems.innerHTML = 
 	`
+		<li class="nav-item" > 
+			<a href="./userProfile.html" class="nav-link"> Profile </a>
+		</li>
 		<li class="nav-item"> 
 			<a href="./logout.html" class="nav-link"> Log out </a>
 		</li>

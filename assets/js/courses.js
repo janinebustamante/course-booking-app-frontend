@@ -31,6 +31,7 @@ fetch('http://localhost:4000/api/courses')
                             Select Course
                         </a>
                     `
+
             } else {
                 //check if user is admin, role to edit and redirect to edit and delete course
                 cardFooter = 
