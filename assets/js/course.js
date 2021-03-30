@@ -14,7 +14,13 @@ let courseDescription = document.querySelector("#courseDescription");
 let coursePrice = document.querySelector("#coursePrice");
 let enrollContainer = document.querySelector("#enrollContainer");
 
-fetch(`http://localhost:4000/api/courses/${courseId}`) //` because we will use variable name
+//` because we will use variable name
+fetch(`http://localhost:4000/api/courses/${courseId}`, {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+}) 
 .then(res => res.json())
 .then(data => {
     console.log(data);

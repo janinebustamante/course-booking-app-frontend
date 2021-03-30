@@ -21,28 +21,36 @@ fetch('http://localhost:4000/api/users/details', {
         console.log(data)
 
         let enrollments = data.enrollments
-        // let enrollmentList = [];
         let courseList = [];
+        let userEnrollments = document.querySelector('#user-enrollments')
+
 
         for (let enrollment of enrollments){
             console.log(enrollment.courseId);
             
 
-            fetch(`http://localhost:4000/api/courses/${enrollment.courseId}`)
+            fetch(`http://localhost:4000/api/courses/${enrollment.courseId}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
             .then(res => res.json())
             .then(data => {
                 // console.log(data)
+                
+                courseList.push({courseName: data.name, courseDescription: data.description})
+                userEnrollments.innerHTML= "";
+            
+                for (let i=0; i<courseList.length; i++){
+                    console.log(courseList[i].courseName)
 
-                let courses = {courseName: data.name, courseDescription: data.description}
-                console.log(courses)
+                    const newLi = document.createElement('li');
+                    newLi.append(`${courseList[i].courseName}: ${courseList[i].courseDescription}`)
+                    userEnrollments.append(newLi)
+                }
 
-                
-                courseList.push(courses)
-                
-                
-                
-        
-                // if (data) {
+                // if (courseList) {
                 //     enrolledCourseLi = 
                 //     `
                 //         <li>${data.name}<ul><li style="list-style-type:none">${data.description}</li></ul></li>
@@ -52,12 +60,8 @@ fetch('http://localhost:4000/api/users/details', {
                 //     let enrolledCourse = document.querySelector('#enrolled-course')
                 //     enrolledCourse.innerHTML = enrolledCourseLi;
                 // }
-            })
-            console.log(courseList)
-
-            
+            })            
         }
-
         if(data){
             userProfileLi = 
                 `
@@ -65,7 +69,6 @@ fetch('http://localhost:4000/api/users/details', {
                     <li style="list-style-type:none"><b>Lastname:</b> ${data.lastName}</li>
                     <li style="list-style-type:none"><b>Email:</b> ${data.email}</li>
                     <li style="list-style-type:none"><b>Mobile Number:</b> ${data.mobileNo}</li>
-                    <li style="list-style-type:none"><b>Enrollments:</b> <ul id="enrolled-course">${courseList}</ul></li>
                 `
 
         } else {

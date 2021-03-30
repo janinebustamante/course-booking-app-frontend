@@ -36,6 +36,9 @@ fetch('http://localhost:4000/api/courses')
                 //check if user is admin, role to edit and redirect to edit and delete course
                 cardFooter = 
                     `
+                        <a href="./viewCourse.html?courseId=${course._id}" value="${course._id}" class="btn btn-primary text-white btn-block viewButton">
+                            View Course
+                        </a>
                         <a href="./editCourse.html?courseId=${course._id}" value="${course._id}" class="btn btn-primary text-white btn-block editButton">
                             Edit Course
                         </a>
