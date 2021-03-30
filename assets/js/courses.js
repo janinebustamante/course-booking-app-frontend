@@ -38,7 +38,7 @@ fetch('http://localhost:4000/api/courses')
                         <a href="./editCourse.html?courseId=${course._id}" value="${course._id}" class="btn btn-primary text-white btn-block editButton">
                             Edit Course
                         </a>
-                        <a href="./deleteCourse.html?courseId=${course._id}" value="${course._id}" id="deleteButton" class="btn btn-primary text-white btn-block dangerButton">
+                        <a href="./deleteCourse.html?courseId=${course._id}" value="${course._id}" class="btn btn-primary text-white btn-block dangerButton">
                             Delete Course
                         </a>
                     `

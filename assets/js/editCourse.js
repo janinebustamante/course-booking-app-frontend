@@ -11,14 +11,14 @@ formSubmit.addEventListener('submit', (e) => {
     let description = document.querySelector('#courseDescription').value;
     let price = document.querySelector('#coursePrice').value;
 
-    fetch('http://localhost:4000/api/courses', {
+    fetch(`http://localhost:4000/api/courses/${courseId}`, { //no courseId
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-            courseId : `${courseId}`,
+            //courseId: courseId,
             name: courseName,
             description: description,
             price: price
