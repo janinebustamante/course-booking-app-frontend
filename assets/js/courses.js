@@ -1,12 +1,19 @@
 //create an admin user variable
 //store variable isAdmin key in user
 let adminUser = localStorage.getItem("isAdmin");
+let token = localStorage.getItem('token');
 
 //cardfooter will be dynamically rendered if the user is an admin or not
 let cardFooter;
 
 //fetch request to all the available user 
-fetch('http://localhost:4000/api/courses')
+fetch('http://localhost:4000/api/courses', {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+})
 .then(res => res.json())
 .then(data => {
     //log the data to check if you were able to fetch the data from the server

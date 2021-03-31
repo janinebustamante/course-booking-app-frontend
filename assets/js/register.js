@@ -58,7 +58,7 @@ registerForm.addEventListener('submit', (e) =>{
 
 				if(data === true) {
 					//Registration successful
-					alert("registered successfuly")
+					alert("Registration successful!")
 					//redirect to login
 					window.location.replace("./login.html");
 				}else {

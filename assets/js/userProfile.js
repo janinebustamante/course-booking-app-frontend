@@ -3,7 +3,7 @@
 let token = localStorage.getItem('token');
 
 let userProfileLi;
-let enrolledCourseLi;
+// let enrolledCourseLi;
 
 
 fetch('http://localhost:4000/api/users/details', {
@@ -20,48 +20,57 @@ fetch('http://localhost:4000/api/users/details', {
 
         console.log(data)
 
-        let enrollments = data.enrollments
-        let courseList = [];
-        let userEnrollments = document.querySelector('#user-enrollments')
+        if (data.isAdmin == false) { //if isAdmin is false, run this code
+
+            let enrollments = data.enrollments
+            let courseList = [];
+            let userEnrollments = document.querySelector('#user-enrollments')
 
 
-        for (let enrollment of enrollments){
-            console.log(enrollment.courseId);
-            
-
-            fetch(`http://localhost:4000/api/courses/${enrollment.courseId}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                // console.log(data)
+            for (let enrollment of enrollments){
+                console.log(enrollment.courseId);
                 
-                courseList.push({courseName: data.name, courseDescription: data.description})
-                userEnrollments.innerHTML= "";
-            
-                for (let i=0; i<courseList.length; i++){
-                    console.log(courseList[i].courseName)
 
-                    const newLi = document.createElement('li');
-                    newLi.append(`${courseList[i].courseName}: ${courseList[i].courseDescription}`)
-                    userEnrollments.append(newLi)
-                }
+                fetch(`http://localhost:4000/api/courses/${enrollment.courseId}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    // console.log(data)
+                    
+                    courseList.push({courseName: data.name, courseDescription: data.description})
+                    userEnrollments.innerHTML= "";
+                
+                    for (let i=0; i<courseList.length; i++){
+                        console.log(courseList[i].courseName)
 
-                // if (courseList) {
-                //     enrolledCourseLi = 
-                //     `
-                //         <li>${data.name}<ul><li style="list-style-type:none">${data.description}</li></ul></li>
-                        
-                //     `
+                        const newLi = document.createElement('li');
+                        newLi.append(`${courseList[i].courseName}: ${courseList[i].courseDescription}`)
+                        userEnrollments.append(newLi)
+                    }
 
-                //     let enrolledCourse = document.querySelector('#enrolled-course')
-                //     enrolledCourse.innerHTML = enrolledCourseLi;
-                // }
-            })            
-        }
+                    // if (courseList) {
+                    //     enrolledCourseLi = 
+                    //     `
+                    //         <li>${data.name}<ul><li style="list-style-type:none">${data.description}</li></ul></li>
+                            
+                    //     `
+
+                    //     let enrolledCourse = document.querySelector('#enrolled-course')
+                    //     enrolledCourse.innerHTML = enrolledCourseLi;
+                    // }
+                })   
+            }       
+        } else { //if data.isAdmin == false (end)  
+            const newLi = document.createElement('li');
+            newLi.append(`Not applicable`);
+            let userEnrollments = document.querySelector('#user-enrollments');
+            userEnrollments.append(newLi);
+        } //end else statement
+
         if(data){
             userProfileLi = 
                 `

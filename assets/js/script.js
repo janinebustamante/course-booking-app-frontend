@@ -17,10 +17,11 @@ if(!userToken) {
 } else {
 	navItems.innerHTML = 
 	`
-		<li class="nav-item" > 
+		<li class="nav-item" style="display: inline-block"> 
 			<a href="./userProfile.html" class="nav-link"> Profile </a>
 		</li>
-		<li class="nav-item"> 
+
+		<li class="nav-item" style="display: inline-block"> 
 			<a href="./logout.html" class="nav-link"> Log out </a>
 		</li>
 	`
