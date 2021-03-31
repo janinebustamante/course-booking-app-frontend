@@ -46,6 +46,7 @@ fetch('http://localhost:4000/api/users/details', {
                 
                     for (let i=0; i<courseList.length; i++){
                         console.log(courseList[i].courseName)
+                        console.log(courseList[i].courseDescription)
 
                         const newLi = document.createElement('li');
                         newLi.append(`${courseList[i].courseName}: ${courseList[i].courseDescription}`)

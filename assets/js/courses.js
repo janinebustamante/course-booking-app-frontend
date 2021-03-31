@@ -15,18 +15,18 @@ fetch('http://localhost:4000/api/courses', {
     }
 })
 .then(res => res.json())
-.then(data => {
+.then(courses => {
     //log the data to check if you were able to fetch the data from the server
-    console.log(data)
+    console.log(courses)
     
     //courseData will store the data to be rendered
     let courseData;
 
-    if (data.length < 1) {
+    if (courses.length < 1) {
         courseData = "No courses available."
     } else {
         //will iterate the courses collection and display each course
-        courseData = data.map(course => {
+        courseData = courses.map(course => {
             //check the make up of each element inside the courses collection
             console.log(course._id)
 
@@ -40,19 +40,36 @@ fetch('http://localhost:4000/api/courses', {
                     `
 
             } else {
-                //check if user is admin, role to edit and redirect to edit and delete course
-                cardFooter = 
-                    `
-                        <a href="./viewCourse.html?courseId=${course._id}" value="${course._id}" class="btn btn-primary text-white btn-block viewButton">
-                            View Course
-                        </a>
-                        <a href="./editCourse.html?courseId=${course._id}" value="${course._id}" class="btn btn-primary text-white btn-block editButton">
-                            Edit Course
-                        </a>
-                        <a href="./deleteCourse.html?courseId=${course._id}" value="${course._id}" class="btn btn-primary text-white btn-block dangerButton">
-                            Delete Course
-                        </a>
-                    `
+
+                if (course.isActive == true) {
+                    //check if user is admin, role to edit and redirect to edit and delete course
+                    cardFooter = 
+                        `
+                            <a href="./viewCourse.html?courseId=${course._id}" value="${course._id}" class="btn btn-primary text-white btn-block viewButton">
+                                View Course
+                            </a>
+                            <a href="./editCourse.html?courseId=${course._id}" value="${course._id}" class="btn btn-primary text-white btn-block editButton">
+                                Edit Course
+                            </a>
+                            <a href="./deleteCourse.html?courseId=${course._id}" value="${course._id}" class="btn btn-primary text-white btn-block dangerButton">
+                                Delete Course
+                            </a>
+                        `
+                } else {
+                    cardFooter = 
+                        `
+                            <a href="./viewCourse.html?courseId=${course._id}" value="${course._id}" class="btn btn-primary text-white btn-block viewButton">
+                                View Course
+                            </a>
+                            <a href="./editCourse.html?courseId=${course._id}" value="${course._id}" class="btn btn-primary text-white btn-block editButton">
+                                Edit Course
+                            </a>
+                            <a href="./activateCourse.html?courseId=${course._id}" value="${course._id}" class="btn btn-primary text-white btn-block dangerButton">
+                                Activate Course
+                            </a>
+                        `
+                }
+                
             }
             return (
                 `
