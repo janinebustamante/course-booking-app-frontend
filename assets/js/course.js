@@ -4,8 +4,8 @@
 // console.log(window.location.search);
 
 let params = new URLSearchParams(window.location.search);
-let courseId = params.get('courseId');
-let token = localStorage.getItem('token');
+let courseId = params.get("courseId");
+let token = localStorage.getItem("token");
 
 // console.log(courseId);
 
@@ -15,53 +15,51 @@ let coursePrice = document.querySelector("#coursePrice");
 let enrollContainer = document.querySelector("#enrollContainer");
 
 //` because we will use variable name
-fetch(`http://localhost:4000/api/courses/${courseId}`, {
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-    }
-}) 
-.then(res => res.json())
-.then(data => {
+fetch(`${api.baseUrl}/api/courses/${courseId}`, {
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  },
+})
+  .then((res) => res.json())
+  .then((data) => {
     console.log(data);
 
     courseName.innerHTML = data.name;
     courseDescription.innerHTML = data.description;
     coursePrice.innerHTML = data.price;
-    enrollContainer.innerHTML = 
-        `
+    enrollContainer.innerHTML = `
             <button id="enrollButton" class="btn btn-block btn-primary">
                 Enroll
             </button>
-        `
+        `;
 
-document.querySelector('#enrollButton').addEventListener("click", (e) => {
-    e.preventDefault()
-    //insert the course to our courses collection
-    fetch('http://localhost:4000/api/users/enroll', {
-        method: 'POST',
+    document.querySelector("#enrollButton").addEventListener("click", (e) => {
+      e.preventDefault();
+      //insert the course to our courses collection
+      fetch(`${api.baseUrl}/api/users/enroll`, {
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-            courseId: courseId
+          courseId: courseId,
+        }),
+      })
+        .then((res) => {
+          return res.json();
         })
-    })
-    .then(res => {
-        return res.json()
-    })
-    .then(data => {
-        //creation of new course successful
-        if (data === true) {
+        .then((data) => {
+          //creation of new course successful
+          if (data === true) {
             //redirect to course page
-            alert ("Thank you for enrolling! See you!")
-            window.location.replace("./courses.html")
-        } else {
+            alert("Thank you for enrolling! See you!");
+            window.location.replace("./courses.html");
+          } else {
             //redirect in creating course
-            alert ("Something went wrong.")
-        }
-    })
-})
-})
-
+            alert("Something went wrong.");
+          }
+        });
+    });
+  });
